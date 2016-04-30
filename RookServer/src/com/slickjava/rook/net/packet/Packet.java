@@ -21,12 +21,12 @@ public abstract class Packet {
 		return this.getData();
 	}
 	
-	public PacketType getTypeFromData() {
+	public PacketType getTypeFromData(byte[] data) {
 		
-		String data = new String(getData());
+		String datac = new String(data);
 		for(PacketType type : PacketType.values())
 		{
-			if(type.getPacketID() == Integer.parseInt(data.substring(0, 2)))
+			if(type.getPacketID() == Integer.parseInt(datac.substring(0, 2)))
 			{
 				return type;
 			}

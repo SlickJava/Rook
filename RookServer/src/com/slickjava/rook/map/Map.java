@@ -1,6 +1,7 @@
 package com.slickjava.rook.map;
 
 import com.slickjava.rook.map.tile.Tile;
+import com.slickjava.rook.map.tile.TileManager;
 
 public class Map {
 	
@@ -12,12 +13,18 @@ public class Map {
 	
 	public Map(String name, int maxX, int maxY)
 	{
+		this.addTileTypes();
 		mapGen = new Generation();
 		this.name = name;
 		this.maxX = maxX;
 		this.maxY = maxY;
 		this.map = mapGen.generateMap(maxX, maxY);
 		
+	}
+	
+	public void addTileTypes()
+	{
+		TileManager tileManager = new TileManager();
 	}
 	
 	public Tile getTileByCoord(int x, int y)
