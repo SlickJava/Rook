@@ -4,6 +4,7 @@ import com.slickjava.rook.map.Map;
 
 public class Server {
 	
+	public static int port = 4444;
 	public static final double ROOK_VERSION = 0.1;
 	public static String mapName = "Test";
 	public static Map gameMap;

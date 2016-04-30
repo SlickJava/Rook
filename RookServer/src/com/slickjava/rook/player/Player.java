@@ -9,7 +9,23 @@ public class Player {
 	
 	public Player(String username, Kingdom kingdom)
 	{
-		
+		this.username = username;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Kingdom getKingdom() {
+		return kingdom;
+	}
+
+	public void setKingdom(Kingdom kingdom) {
+		this.kingdom = kingdom;
 	}
 
 }
