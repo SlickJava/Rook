@@ -3,12 +3,14 @@ package com.slickjava.rook.net;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 import com.slickjava.rook.Server;
 import com.slickjava.rook.net.packet.Packet;
 import com.slickjava.rook.net.packet.PacketType;
 import com.slickjava.rook.net.packet.packets.net.N00Login;
 import com.slickjava.rook.net.packet.packets.net.N01Disconnect;
+import com.slickjava.rook.player.Player;
 
 public class MainServer {
 	
@@ -16,6 +18,8 @@ public class MainServer {
 	private NetPacketHandler npHandler;
 	
 	private DatagramSocket serverSocket;
+	
+	public static ArrayList<Player> activeConnections = new ArrayList<Player>();
 	
 	public MainServer()
 	{
@@ -57,13 +61,13 @@ public class MainServer {
 		Packet packet = null;
 		PacketType packetType = packet.getTypeFromData(data);
 		
-		switch (packetType)
-		{
+		switch (packetType) {
+		
 		case INVALID:
 			break;
 		case LOGIN:
 			packet = new N00Login(data);
-			npHandler.handleN00Login((N00Login)packet);
+			npHandler.handleN00Login((N00Login)packet, clientAddress.getHostAddress());
 		case DISCONNECT:
 			packet = new N01Disconnect(data);
 			npHandler.handleN01Disconnect((N01Disconnect)packet);

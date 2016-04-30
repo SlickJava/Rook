@@ -1,5 +1,7 @@
 package com.slickjava.rook.map;
 
+import java.util.Random;
+
 import com.slickjava.rook.map.tile.Tile;
 import com.slickjava.rook.map.tile.TileManager;
 
@@ -25,6 +27,18 @@ public class Map {
 	public void addTileTypes()
 	{
 		TileManager tileManager = new TileManager();
+	}
+	
+	public int getRandomY()
+	{
+		Random rand = new Random();
+		return rand.nextInt((maxY - 0) + 1) + 0;
+	}
+	
+	public int getRandomX()
+	{
+		Random rand = new Random();
+		return rand.nextInt((maxX - 0) + 1) + 0;
 	}
 	
 	public Tile getTileByCoord(int x, int y)

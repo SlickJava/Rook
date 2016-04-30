@@ -6,6 +6,7 @@ public class Player {
 	
 	private String username;
 	private Kingdom kingdom;
+	private boolean online;
 	
 	public Player(String username, Kingdom kingdom)
 	{
@@ -18,6 +19,14 @@ public class Player {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public boolean isOnline() {
+		return online;
+	}
+
+	public void setOnline(boolean online) {
+		this.online = online;
 	}
 
 	public Kingdom getKingdom() {

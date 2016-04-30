@@ -1,5 +1,7 @@
 # Rook
-A civilization-war based strategy game.
+Welcome to Rook - a civilization war based strategy game!
+Evolve your kingdom in a server with as many friends as you like!
+Nuke them, ally with them, wage wars between each other, you can do whatever you want.
 
 ## Features
 * Multiplayer
