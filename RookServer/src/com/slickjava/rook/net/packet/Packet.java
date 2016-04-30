@@ -17,6 +17,10 @@ public abstract class Packet {
 		return changed.substring(2);
 	}
 	
+	public byte[] getSendData() {
+		return this.getData();
+	}
+	
 	public PacketType getTypeFromData() {
 		
 		String data = new String(getData());

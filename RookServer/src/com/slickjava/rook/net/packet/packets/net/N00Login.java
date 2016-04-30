@@ -8,6 +8,12 @@ public class N00Login extends Packet{
 	private String username;
 	private String password;
 	
+	public N00Login(byte[] data) {
+		super(PacketType.LOGIN);
+		this.setData(data);
+		// TODO Auto-generated constructor stub
+	}
+	
 	public N00Login(String username, String password) {
 		super(PacketType.LOGIN);
 		this.username = username;
