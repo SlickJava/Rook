@@ -31,13 +31,13 @@ public class NetPacketHandler {
 	
 	public void handleN01Disconnect(N01Disconnect packet)
 	{
-		for(Player player : PlayerManager.players)
+		for(Player player : MainServer.activeConnections)
 		{
-			if(player.getUsername() == packet.getUsername())
+			if(player.getUsername().equals(packet.getUsername()))
 			{
 				player.setOnline(false);
 				MainServer.activeConnections.remove(player);
-				System.out.println(player.getUsername() + " disconnected");
+				System.out.println(player.getUsername() + " disconnected.");
 				return;
 			}
 		}

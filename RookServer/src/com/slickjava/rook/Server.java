@@ -1,6 +1,7 @@
 package com.slickjava.rook;
 
 import com.slickjava.rook.map.Map;
+import com.slickjava.rook.net.MainServer;
 
 public class Server {
 	
@@ -19,6 +20,7 @@ public class Server {
 	{
 		//Next two lines are for testing only.
 		gameMap = new Map(mapName, 100, 100);
+		MainServer server = new MainServer();
 		System.out.println(gameMap.getTileByCoord(5, 78).getTileName());
 	}
 

@@ -27,20 +27,16 @@ public class N01Disconnect extends Packet{
 		return sendData.getBytes();
 	}
 	
-	public String getUsername() {
-		return username;
+	
+	public String getUsername()
+	{
+		String[] split = this.readData().split(":");
+		return split[0];
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	
+	public String getPassword()
+	{
+		String[] split = this.readData().split(":");
+		return split[1];
 	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 }

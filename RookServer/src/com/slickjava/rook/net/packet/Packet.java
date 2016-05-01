@@ -21,7 +21,7 @@ public abstract class Packet {
 		return this.getData();
 	}
 	
-	public PacketType getTypeFromData(byte[] data) {
+	public static PacketType getTypeFromData(byte[] data) {
 		
 		String datac = new String(data);
 		for(PacketType type : PacketType.values())
