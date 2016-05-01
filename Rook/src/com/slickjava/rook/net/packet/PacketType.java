@@ -2,16 +2,16 @@ package com.slickjava.rook.net.packet;
 
 public enum PacketType {
 
-	INVALID(-1), LOGIN(00), DISCONNECT(01);
+	INVALID("-1"), LOGIN("00"), DISCONNECT("01"), REQUEST_ENCRYPTION_KEY("02"), BROADCAST_MESSAGE("03");
 	
-	private int packetID;
+	private String packetID;
 	
-	private PacketType(int packetID)
+	private PacketType(String packetID)
 	{
 		this.packetID = packetID;
 	}
 	
-	public int getPacketID()
+	public String getPacketID()
 	{
 		return this.packetID;
 	}

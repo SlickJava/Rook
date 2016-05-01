@@ -11,9 +11,11 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import com.slickjava.rook.net.packet.packets.N00Login;
 import com.slickjava.rook.security.Encrypt;
 
 public class Client {
+	
 	
 	public static void main(String args[]) throws IOException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException
 	{
@@ -21,10 +23,11 @@ public class Client {
 		InetAddress address = InetAddress.getByName("localhost");
 		
         Encrypt encrypt = new Encrypt();
-        byte[] encrypted = (encrypt.encrypt("01SlickJava:doge").getBytes());
+      
         
-		DatagramPacket packet = new DatagramPacket(encrypted,encrypted.length, address, 4444);
-		socket.send(packet);
+        N00Login login = new N00Login("SlickJava", "doge");
+        login.sendData(socket, address, 4444, encrypt);
+        
 	}
 	
 }

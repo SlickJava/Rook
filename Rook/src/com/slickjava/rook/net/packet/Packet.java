@@ -1,5 +1,12 @@
 package com.slickjava.rook.net.packet;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
+import com.slickjava.rook.security.Encrypt;
+
 public abstract class Packet {
 
 	protected PacketType type;
@@ -17,12 +24,29 @@ public abstract class Packet {
 		return changed.substring(2);
 	}
 	
-	public PacketType getTypeFromData() {
+	public byte[] getSendData() {
+		return this.getData();
+	}
+	
+	public void sendData(DatagramSocket socket, InetAddress address, int port, Encrypt encrypt)
+	{
+        byte[] encrypted = (encrypt.encrypt(new String(this.getSendData())).getBytes());
+		DatagramPacket packet = new DatagramPacket(encrypted,encrypted.length, address, port);
 		
-		String data = new String(getData());
+		try {
+			socket.send(packet);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static PacketType getTypeFromData(byte[] data) {
+		
+		String datac = new String(data);
 		for(PacketType type : PacketType.values())
 		{
-			if(type.getPacketID() == Integer.parseInt(data.substring(0, 2)))
+			if(type.getPacketID().equals(datac.substring(0, 2)))
 			{
 				return type;
 			}
