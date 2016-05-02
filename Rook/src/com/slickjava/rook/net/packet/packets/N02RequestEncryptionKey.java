@@ -5,8 +5,8 @@ import com.slickjava.rook.net.packet.PacketType;
 
 public class N02RequestEncryptionKey extends Packet{
 
-	public N02RequestEncryptionKey(PacketType type) {
-		super(type);
+	public N02RequestEncryptionKey(byte[] data) {
+		super(PacketType.REQUEST_ENCRYPTION_KEY);
 		// TODO Auto-generated constructor stub
 	}
 

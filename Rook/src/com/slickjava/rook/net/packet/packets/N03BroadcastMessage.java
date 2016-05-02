@@ -26,7 +26,7 @@ public class N03BroadcastMessage extends Packet{
 	}
 
 	public String getMessage() {
-		return message;
+		return this.readData();
 	}
 
 	public void setMessage(String message) {

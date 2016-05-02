@@ -13,7 +13,9 @@ import com.slickjava.rook.net.packet.packets.net.N00Login;
 import com.slickjava.rook.net.packet.packets.net.N01Disconnect;
 import com.slickjava.rook.net.packet.packets.net.N02RequestEncryptionKey;
 import com.slickjava.rook.net.packet.packets.net.N03BroadcastMessage;
+import com.slickjava.rook.net.packet.packets.net.N04Message;
 import com.slickjava.rook.player.Player;
+import com.slickjava.rook.player.PlayerManager;
 import com.slickjava.rook.security.Encrypt;
 
 public class MainServer {
@@ -54,7 +56,8 @@ public class MainServer {
 				
 				DatagramPacket packet = new DatagramPacket(buf, buf.length);
 				serverSocket.receive(packet);
-				
+		        //System.out.println(new String(packet.getData()));
+
 		        String msg  = (this.encryption.decrypt(new String(packet.getData())));
 		        if(msg != null)  {
 		        	byte[] decrypted = msg.getBytes();
@@ -62,6 +65,7 @@ public class MainServer {
 		        } else {
 		        	System.out.println("Invalid encryption key from " + packet.getAddress());
 		        }
+		        
 		        
 			}
 			
@@ -81,20 +85,21 @@ public class MainServer {
 			break;
 		case LOGIN:
 			packet = new N00Login(data);
-			npHandler.handleN00Login((N00Login)packet, clientAddress);
+			npHandler.handleN00Login((N00Login)packet, clientAddress, this);
 			break;
 		case DISCONNECT:
 			packet = new N01Disconnect(data);
-			npHandler.handleN01Disconnect((N01Disconnect)packet);
+			npHandler.handleN01Disconnect((N01Disconnect)packet, this);
 			break;
 		case REQUEST_ENCRYPTION_KEY:
 			packet = new N02RequestEncryptionKey(data);
 			npHandler.handleN02RequestEncryptionKey((N02RequestEncryptionKey)packet);
 			break;
+			/* remove until server is ported to not localhost
 		case BROADCAST_MESSAGE:
 			packet = new N03BroadcastMessage(data);
 			npHandler.handleN03BroadcastMessage((N03BroadcastMessage)packet, this);
-			break;
+			break;*/
 		}
 	}
 	
@@ -108,9 +113,35 @@ public class MainServer {
         }
 	}
 	
+	public void broadcastMessage(String message)
+	{
+		N03BroadcastMessage packet = new N03BroadcastMessage(message);
+		echoData(packet.getEncryptedData(encryption));
+	}
+	
+	public void sendMessage(String playerName, String msg)
+	{
+		for(Player player : PlayerManager.players)
+		{
+			if(player.getUsername().equals(playerName))
+			{
+				N04Message packet = new N04Message(msg, player.getUsername());
+				packet.sendData(serverSocket, player.getAddress(), encryption);
+				return;
+			}
+		}
+		
+		System.out.println("Player " + playerName + " is invalid.");
+	}
+	
+	public DatagramSocket getSocket()
+	{
+		return this.serverSocket;
+	}
+	
 	public void echoData(byte[] data)
 	{
-		for(Player p : MainServer.activeConnections)
+		for(Player p : this.activeConnections)
 		{
 			this.sendData(data, p.getAddress(), Server.port);
 		}

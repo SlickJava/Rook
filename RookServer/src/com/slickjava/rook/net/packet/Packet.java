@@ -24,7 +24,12 @@ public abstract class Packet {
 		return changed.substring(2);
 	}
 	
+	public byte[] getEncryptedData(Encrypt encrypt) {
+		byte[] encrypted = (encrypt.encrypt(new String(this.getSendData())).getBytes());
+		return encrypted;
+	}
 	public byte[] getSendData() {
+		
 		return this.getData();
 	}
 	
