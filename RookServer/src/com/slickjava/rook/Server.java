@@ -22,6 +22,7 @@ public class Server {
 	
 	public void init() 
 	{
+	    //Test commit from codeenvy IDE.... yay!! let's hope I can code at school now :D
 		//Next two lines are for testing only.
 		playerManager = new PlayerManager();
 		gameMap = new Map(mapName, 100, 100);
