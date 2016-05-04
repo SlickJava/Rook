@@ -6,8 +6,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.codec.binary.Base64;
+import javax.xml.bind.DatatypeConverter;
 
 public class Encrypt {
 	
@@ -34,7 +33,7 @@ public class Encrypt {
             byte[] encrypted = cipher.doFinal(value.getBytes());
 
 
-            return Base64.encodeBase64String(encrypted);
+            return DatatypeConverter.printBase64Binary(encrypted);
         }  catch(InvalidKeyException e) {
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -51,7 +50,7 @@ public class Encrypt {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
 
-            byte[] original = cipher.doFinal(Base64.decodeBase64(encrypted));
+            byte[] original = cipher.doFinal(DatatypeConverter.parseBase64Binary(encrypted));
 
             return new String(original);
         } catch(BadPaddingException e) {
