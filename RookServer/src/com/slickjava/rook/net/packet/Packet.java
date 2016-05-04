@@ -24,6 +24,18 @@ public abstract class Packet {
 		return changed.substring(2);
 	}
 	
+	public void sendConfirmData(DatagramSocket socket, InetAddress address, Encrypt encrypt){
+        byte[] encrypted = (encrypt.encrypt(new String("99" + this.type.getPacketID() + ":" + socket.getInetAddress() + ":" + "recieved")).getBytes());
+		DatagramPacket packet = new DatagramPacket(encrypted,encrypted.length, address, 4444);
+		
+		try {
+			socket.send(packet);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public byte[] getEncryptedData(Encrypt encrypt) {
 		byte[] encrypted = (encrypt.encrypt(new String(this.getSendData())).getBytes());
 		return encrypted;

@@ -16,7 +16,7 @@ public class NetPacketHandler {
 	
 	public void handleN00Login(N00Login packet, InetAddress ipAddress, MainServer server)
 	{
-		for(Player player : MainServer.activeConnections)
+		for(Player player : PlayerManager.players)
 		{
 			if(player.getUsername() == packet.getUsername())
 			{
@@ -27,6 +27,7 @@ public class NetPacketHandler {
 		
 		Kingdom kingdom = new Kingdom(packet.getUsername(), Server.getMap().getRandomX(), Server.getMap().getRandomY());
 		Player player = new Player(packet.getUsername(), ipAddress, kingdom);
+		PlayerManager.players.add(player);
 		MainServer.activeConnections.add(player);
 		player.setOnline(true);
 		server.broadcastMessage(player.getUsername() + " just connected!");

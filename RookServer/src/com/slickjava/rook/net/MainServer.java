@@ -66,6 +66,7 @@ public class MainServer {
 		        	System.out.println("Invalid encryption key from " + packet.getAddress());
 		        }
 		        
+		        this.sendMessage("test", "mother fucker got fucked");
 		        
 			}
 			
@@ -86,14 +87,17 @@ public class MainServer {
 		case LOGIN:
 			packet = new N00Login(data);
 			npHandler.handleN00Login((N00Login)packet, clientAddress, this);
+			packet.sendConfirmData(serverSocket, clientAddress, encryption);
 			break;
 		case DISCONNECT:
 			packet = new N01Disconnect(data);
 			npHandler.handleN01Disconnect((N01Disconnect)packet, this);
+			packet.sendConfirmData(serverSocket, clientAddress, encryption);
 			break;
 		case REQUEST_ENCRYPTION_KEY:
 			packet = new N02RequestEncryptionKey(data);
 			npHandler.handleN02RequestEncryptionKey((N02RequestEncryptionKey)packet);
+			packet.sendConfirmData(serverSocket, clientAddress, encryption);
 			break;
 			/* remove until server is ported to not localhost
 		case BROADCAST_MESSAGE:
@@ -121,7 +125,7 @@ public class MainServer {
 	
 	public void sendMessage(String playerName, String msg)
 	{
-		for(Player player : PlayerManager.players)
+		for(Player player : MainServer.activeConnections)
 		{
 			if(player.getUsername().equals(playerName))
 			{

@@ -41,10 +41,9 @@ public class MainClient {
 	
 	public void listenForPackets()
 	{
+		System.out.println("Listening for packets...");
 		System.out.println("Connecting to server...");
 		this.login("test", "test");
-		System.out.println("Connected!");
-		System.out.println("Listening for packets...");
 		while(true)
 		{
 			try {
@@ -72,7 +71,6 @@ public class MainClient {
 		PacketType packetType = Packet.getTypeFromData(data);
 
 		switch (packetType) {
-		
 		case INVALID:
 			break;
 		case BROADCAST_MESSAGE:
@@ -82,6 +80,26 @@ public class MainClient {
 		case MESSAGE:
 			packet = new N04Message(data);
 			npHandler.handleN04Message((N04Message) packet);
+			break;
+		case RETURNED:
+			String message = new String(data);
+			System.out.println(message);
+			message.substring(2);
+			System.out.println(message);
+			String split[] = message.split(":");
+			String packetID = split[0];
+			String locationReturned = split[1];
+			
+			for(PacketType type : PacketType.values())
+			{
+				if(type.getPacketID().equals(packetID))
+				{
+					if(type.getPacketID().equals(PacketType.LOGIN))
+					{
+						System.out.println("Connected to " + locationReturned);
+					}
+				}
+			}
 			break;
 		default:
 			break;
