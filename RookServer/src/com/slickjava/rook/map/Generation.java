@@ -26,6 +26,9 @@ public class Generation {
 				}
 				
 				map[i][j] = randomTile;
+				map[i][j].setX(j);
+				map[i][j].setY(i);
+				
 			}
 		}
 		
