@@ -17,8 +17,16 @@ public class Kingdom {
 	
 	public void onCreate()
 	{
+		System.out.println("Creating kingdom " + this.getName() + ".");
+		
 		
 	}
+	
+	public void allocateLand()
+	{
+		
+	}
+
 
 	public String getName() {
 		return name;
